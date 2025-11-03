@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Estudiantes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>CRUD Estudiantes</h1>
+
+    <form id="studentForm">
+      <input type="text" id="nombre" placeholder="Nombre" required>
+      <input type="number" id="edad" placeholder="Edad" required>
+      <input type="text" id="carrera" placeholder="Carrera" required>
+      <button type="submit">Agregar</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Edad</th>
+          <th>Carrera</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="studentsTable"></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
