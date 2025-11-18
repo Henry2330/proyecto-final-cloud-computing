@@ -9,7 +9,7 @@ const ENV = process.env.NODE_ENV || 'development';
 const path = require('path');
 
 // Servir archivos estáticos de la carpeta "public"
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, '')));
 
 
 // Middleware de seguridad
@@ -21,9 +21,9 @@ app.use(morgan('combined'));
 // Parse JSON
 app.use(express.json());
 
-// =======================
+
 // Datos en memoria (CRUD)
-// =======================
+
 let students = [];
 let nextId = 1;
 
