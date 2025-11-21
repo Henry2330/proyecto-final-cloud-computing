@@ -8,15 +8,15 @@ output "ecr_repository_url" {
   value       = aws_ecr_repository.app.repository_url
 }
 
-#output "alb_dns_name" {
-#  description = "DNS del Application Load Balancer"
-#  value       = aws_lb.main.dns_name
-#}
+output "alb_dns_name" {
+ description = "DNS del Application Load Balancer"
+ value       = aws_lb.main.dns_name
+}
 
-#output "alb_url" {
-#  description = "URL completa de la aplicación"
-#  value       = "http://${aws_lb.main.dns_name}"
-#}
+output "alb_url" {
+ description = "URL completa de la aplicación"
+ value       = "http://${aws_lb.main.dns_name}"
+}
 
 output "ecs_cluster_name" {
   description = "Nombre del cluster ECS"
