@@ -35,7 +35,7 @@ resource "aws_ecs_task_definition" "app" {
   container_definitions = jsonencode([{
     name  = "${var.project_name}-${var.environment}-container"
     image = "${aws_ecr_repository.app.repository_url}:latest"
-    
+
     essential = true
 
     portMappings = [{
@@ -92,14 +92,14 @@ resource "aws_ecs_service" "app" {
     assign_public_ip = false
   }
 
-#  load_balancer {
-#    target_group_arn = aws_lb_target_group.app.arn
-#    container_name   = "${var.project_name}-${var.environment}-container"
-#    container_port   = var.app_port
-#  }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.app.arn
+    container_name   = "${var.project_name}-${var.environment}-container"
+    container_port   = var.app_port
+  }
 
   depends_on = [
-#    aws_lb_listener.http,
+    aws_lb_listener.http,
     aws_iam_role_policy_attachment.ecs_task_execution_role_policy
   ]
 
