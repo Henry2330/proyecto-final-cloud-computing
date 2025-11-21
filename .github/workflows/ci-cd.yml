@@ -14,6 +14,7 @@ env:
   ECR_REPOSITORY: proyecto-cicd-dev-app
   ECS_SERVICE: proyecto-cicd-dev-service
   ECS_CLUSTER: proyecto-cicd-dev-cluster
+  ECS_TASK_DEFINITION: proyecto-cicd-dev-task
   CONTAINER_NAME: proyecto-cicd-dev-container
 
 jobs:
@@ -142,10 +143,15 @@ jobs:
     
     - name: Descargar task definition actual
       run: |
-        aws ecs describe-task-definition \
-          --task-definition ${{ env.ECS_CLUSTER }}-task \
-          --query taskDefinition > task-definition.json
-    
+        # Intentar descargar la task definition
+        if aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} --query taskDefinition > task-definition.json 2>/dev/null; then
+          echo "✅ Task definition descargada exitosamente"
+        else
+          echo "⚠️  Task definition no existe. Esto es normal en el primer deploy."
+          echo "El servicio ECS debe ser creado primero con Terraform."
+          exit 1
+        fi
+
     - name: Actualizar task definition con nueva imagen
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -164,7 +170,7 @@ jobs:
     
     - name: Verificar despliegue
       run: |
-        echo " Despliegue completado exitosamente"
+        echo "✅ Despliegue completado exitosamente"
         echo "Verificando salud del servicio..."
         
         aws ecs describe-services \
