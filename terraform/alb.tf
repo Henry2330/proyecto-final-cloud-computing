@@ -1,4 +1,4 @@
-/* # Application Load Balancer
+ # Application Load Balancer
 resource "aws_lb" "main" {
   name               = "${var.project_name}-${var.environment}-alb"
   internal           = false
@@ -71,4 +71,3 @@ resource "aws_cloudwatch_metric_alarm" "alb_target_response_time" {
   }
 }
 
-*/
