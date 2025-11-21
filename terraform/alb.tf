@@ -51,11 +51,36 @@ resource "aws_lb_target_group" "app" {
   }
 }
 
-# Listener HTTP
+# Listener HTTP - Redirige a HTTPS si hay certificado, sino forward directo
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.main.arn
   port              = "80"
   protocol          = "HTTP"
+
+  default_action {
+    type = var.certificate_arn != "" || var.domain_name != "" ? "redirect" : "forward"
+
+    dynamic "redirect" {
+      for_each = var.certificate_arn != "" || var.domain_name != "" ? [1] : []
+      content {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
+    }
+
+    target_group_arn = var.certificate_arn != "" || var.domain_name != "" ? null : aws_lb_target_group.app.arn
+  }
+}
+
+# Listener HTTPS - Solo se crea si hay un certificado configurado
+resource "aws_lb_listener" "https" {
+  count             = var.certificate_arn != "" || var.domain_name != "" ? 1 : 0
+  load_balancer_arn = aws_lb.main.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn   = var.certificate_arn != "" ? var.certificate_arn : try(aws_acm_certificate.main[0].arn, "")
 
   default_action {
     type             = "forward"

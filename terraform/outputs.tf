@@ -15,7 +15,22 @@ output "alb_dns_name" {
 
 output "alb_url" {
   description = "URL completa de la aplicación"
-  value       = "http://${aws_lb.main.dns_name}"
+  value       = var.certificate_arn != "" || var.domain_name != "" ? "https://${aws_lb.main.dns_name}" : "http://${aws_lb.main.dns_name}"
+}
+
+output "alb_https_url" {
+  description = "URL HTTPS de la aplicación (si HTTPS está habilitado)"
+  value       = var.certificate_arn != "" || var.domain_name != "" ? "https://${aws_lb.main.dns_name}" : "HTTPS no configurado - Configure certificate_arn o domain_name"
+}
+
+output "certificate_arn" {
+  description = "ARN del certificado SSL/TLS"
+  value       = var.certificate_arn != "" ? var.certificate_arn : try(aws_acm_certificate.main[0].arn, "No certificate configured")
+}
+
+output "certificate_validation_records" {
+  description = "Registros DNS para validar el certificado (si se creó con ACM)"
+  value       = try(aws_acm_certificate.main[0].domain_validation_options, [])
 }
 
 output "ecs_cluster_name" {

@@ -75,3 +75,16 @@ variable "autoscaling_memory_target" {
   type        = number
   default     = 80
 }
+
+variable "certificate_arn" {
+  description = "ARN del certificado SSL/TLS de ACM para HTTPS"
+  type        = string
+  default     = ""
+}
+
+variable "domain_name" {
+  description = "Nombre del dominio para el certificado SSL"
+  type        = string
+  default     = ""
+}
+
