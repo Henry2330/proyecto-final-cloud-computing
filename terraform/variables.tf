@@ -45,3 +45,33 @@ variable "health_check_path" {
   type        = string
   default     = "/health"
 }
+
+variable "autoscaling_enabled" {
+  description = "Habilitar auto scaling para ECS"
+  type        = bool
+  default     = false
+}
+
+variable "autoscaling_min_capacity" {
+  description = "Capacidad mínima para auto scaling"
+  type        = number
+  default     = 1
+}
+
+variable "autoscaling_max_capacity" {
+  description = "Capacidad máxima para auto scaling"
+  type        = number
+  default     = 4
+}
+
+variable "autoscaling_cpu_target" {
+  description = "Target de CPU para auto scaling (%)"
+  type        = number
+  default     = 70
+}
+
+variable "autoscaling_memory_target" {
+  description = "Target de memoria para auto scaling (%)"
+  type        = number
+  default     = 80
+}
