@@ -26,16 +26,16 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v4
     
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
+#    - name: Setup Node.js
+#      uses: actions/setup-node@v4
+#      with:
+#        node-version: '18'
+#        cache: 'npm'
 #        cache-dependency-path: app/backend/package-lock.json
     
     - name: Instalar dependencias
       working-directory: ./app/backend
-      run: npm ci
+      run: npm install
     
 #    - name: Ejecutar tests
 #      working-directory: ./app
