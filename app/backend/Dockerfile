@@ -12,6 +12,9 @@ RUN npm install --only=production
 # Etapa de producción
 FROM node:18-alpine
 
+# Instalar curl para health checks
+RUN apk add --no-cache curl
+
 # Crear usuario no-root para seguridad
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001
