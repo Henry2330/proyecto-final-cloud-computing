@@ -6,12 +6,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const ENV = process.env.NODE_ENV || 'development';
 
-const path = require('path');
-
-// Servir archivos estáticos de la carpeta "public"
-//app.use(express.static(path.join(__dirname, '')));
-
-
 // Middleware de seguridad
 app.use(helmet());
 
@@ -113,12 +107,12 @@ app.get('/api/info', (req, res) => {
 });
 
 // Ruta de error para testing
-app.get('/error', (req, res) => {
+app.get('/error', (_req, _res) => {
   throw new Error('Error de prueba');
 });
 
 // Manejo de errores
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
   console.error('Error:', err.message);
   res.status(500).json({
     success: false,
