@@ -25,7 +25,7 @@ variable "app_port" {
 variable "app_count" {
   description = "Número de instancias de la aplicación"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "fargate_cpu" {
