@@ -88,3 +88,64 @@ variable "domain_name" {
   default     = ""
 }
 
+# Variables para RDS
+variable "db_name" {
+  description = "Nombre de la base de datos"
+  type        = string
+  default     = "appdb"
+}
+
+variable "db_username" {
+  description = "Usuario maestro de la base de datos"
+  type        = string
+  default     = "admin"
+}
+
+variable "db_engine_version" {
+  description = "Versión del motor MySQL"
+  type        = string
+  default     = "8.0.35" # Versión compatible con free tier
+}
+
+variable "db_instance_class" {
+  description = "Clase de instancia RDS (free tier: db.t3.micro o db.t2.micro)"
+  type        = string
+  default     = "db.t3.micro"
+}
+
+variable "db_allocated_storage" {
+  description = "Almacenamiento asignado en GB (free tier: hasta 20GB)"
+  type        = number
+  default     = 20
+}
+
+variable "db_backup_retention_period" {
+  description = "Días de retención de backups (0 = deshabilitado)"
+  type        = number
+  default     = 7
+}
+
+variable "db_skip_final_snapshot" {
+  description = "Saltar snapshot final al eliminar (true para dev)"
+  type        = bool
+  default     = true
+}
+
+variable "db_deletion_protection" {
+  description = "Protección contra eliminación accidental"
+  type        = bool
+  default     = false
+}
+
+# Variables para Secrets Manager
+variable "secret_recovery_window_days" {
+  description = "Días de ventana de recuperación para secrets eliminados"
+  type        = number
+  default     = 7
+}
+
+variable "app_log_level" {
+  description = "Nivel de logging de la aplicación"
+  type        = string
+  default     = "info"
+}

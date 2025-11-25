@@ -52,3 +52,57 @@ output "cloudwatch_dashboard_url" {
   description = "URL del dashboard de CloudWatch"
   value       = "https://console.aws.amazon.com/cloudwatch/home?region=${var.aws_region}#dashboards:name=${aws_cloudwatch_dashboard.main.dashboard_name}"
 }
+
+# Outputs para RDS
+output "rds_endpoint" {
+  description = "Endpoint de la base de datos RDS"
+  value       = aws_db_instance.main.endpoint
+}
+
+output "rds_address" {
+  description = "Dirección del host de la base de datos"
+  value       = aws_db_instance.main.address
+}
+
+output "rds_port" {
+  description = "Puerto de la base de datos"
+  value       = aws_db_instance.main.port
+}
+
+output "rds_database_name" {
+  description = "Nombre de la base de datos"
+  value       = aws_db_instance.main.db_name
+}
+
+output "rds_username" {
+  description = "Usuario de la base de datos"
+  value       = aws_db_instance.main.username
+  sensitive   = true
+}
+
+# Outputs para Secrets Manager
+output "db_credentials_secret_arn" {
+  description = "ARN del secret con las credenciales de la base de datos"
+  value       = aws_secretsmanager_secret.db_credentials.arn
+}
+
+output "db_credentials_secret_name" {
+  description = "Nombre del secret con las credenciales de la base de datos"
+  value       = aws_secretsmanager_secret.db_credentials.name
+}
+
+output "app_config_secret_arn" {
+  description = "ARN del secret con la configuración de la aplicación"
+  value       = aws_secretsmanager_secret.app_config.arn
+}
+
+output "app_config_secret_name" {
+  description = "Nombre del secret con la configuración de la aplicación"
+  value       = aws_secretsmanager_secret.app_config.name
+}
+
+output "secrets_manager_console_url" {
+  description = "URL de la consola de AWS Secrets Manager"
+  value       = "https://console.aws.amazon.com/secretsmanager/home?region=${var.aws_region}"
+}
+

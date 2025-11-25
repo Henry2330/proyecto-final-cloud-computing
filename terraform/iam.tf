@@ -42,6 +42,45 @@ resource "aws_iam_role_policy" "ecs_task_execution_cloudwatch" {
   })
 }
 
+# Política para acceso a Secrets Manager
+resource "aws_iam_role_policy" "ecs_task_execution_secrets" {
+  name = "${var.project_name}-${var.environment}-ecs-secrets-policy"
+  role = aws_iam_role.ecs_task_execution_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+      ]
+      Resource = [
+        "arn:aws:secretsmanager:${var.aws_region}:*:secret:${var.project_name}-${var.environment}-*"
+      ]
+    }]
+  })
+}
+
+# Política para descifrar secretos con KMS (si se usa KMS custom)
+resource "aws_iam_role_policy" "ecs_task_execution_kms" {
+  name = "${var.project_name}-${var.environment}-ecs-kms-policy"
+  role = aws_iam_role.ecs_task_execution_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "kms:Decrypt",
+        "kms:DescribeKey"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
+
 # IAM Role para ECS Task (para la aplicación)
 resource "aws_iam_role" "ecs_task_role" {
   name = "${var.project_name}-${var.environment}-ecs-task-role"

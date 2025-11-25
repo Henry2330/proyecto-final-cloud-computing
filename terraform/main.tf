@@ -6,6 +6,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.5"
+    }
   }
 
   # Backend para guardar estado (opcional - descomentar después)
@@ -26,4 +30,9 @@ provider "aws" {
       ManagedBy   = "Terraform"
     }
   }
+}
+
+# Data source para obtener zonas de disponibilidad
+data "aws_availability_zones" "available" {
+  state = "available"
 }
