@@ -104,7 +104,7 @@ variable "db_username" {
 variable "db_engine_version" {
   description = "Versión del motor MySQL"
   type        = string
-  default     = "8.0.35" # Versión compatible con free tier
+  default     = "8.0.39" # Versión compatible con free tier
 }
 
 variable "db_instance_class" {
