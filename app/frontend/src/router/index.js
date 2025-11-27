@@ -9,14 +9,14 @@ const router = createRouter({
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
         title: 'Iniciar Sesión'
       }
     },
     {
       path: '/',
       component: () => import(/* webpackChunkName: "layout" */ '@/layouts/MainLayout.vue'),
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: false },
       children: [
         {
           path: '',
